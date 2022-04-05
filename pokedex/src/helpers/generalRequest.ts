@@ -1,4 +1,4 @@
-type PokeRequest = {
+type GeneralReq = {
   data: {
     results: {
       name: string;
@@ -7,4 +7,4 @@ type PokeRequest = {
   };
 };
 
-export default PokeRequest;
+export default GeneralReq;

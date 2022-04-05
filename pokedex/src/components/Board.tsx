@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pokemon from "./Pokemon";
-import PokeRequest from "../helpers/pokeRequest";
+import GeneralReq from "../helpers/generalRequest";
 const Board: React.FC = () => {
   const [data, setData] = useState<any>(null);
   useEffect(() => {
     async function fetchData() {
-      const fetchPokemons: PokeRequest = await axios.get(
+      const fetchPokemons: GeneralReq = await axios.get(
         "https://pokeapi.co/api/v2/pokemon/"
       );
       const results = fetchPokemons.data.results;
