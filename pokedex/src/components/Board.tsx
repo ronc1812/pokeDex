@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Pokemon from "./Pokemon";
-import GeneralReq from "../helpers/generalRequest";
-const Board: React.FC = () => {
-  const [data, setData] = useState<any>(null);
-  useEffect(() => {
-    async function fetchData() {
-      const fetchPokemons: GeneralReq = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon/"
-      );
-      const results = fetchPokemons.data.results;
-      setData(results);
-    }
-    fetchData();
-  }, []);
+const Board: React.FC<{ info: { name: string; url: string }[] | null }> = (
+  props
+) => {
   return (
     <>
-      {data ? (
-        data.map((pokemon: { name: string; url: string }) => (
+      {props.info ? (
+        props.info.map((pokemon: { name: string; url: string }) => (
           <Pokemon key={pokemon.name} name={pokemon.name} url={pokemon.url} />
         ))
       ) : (

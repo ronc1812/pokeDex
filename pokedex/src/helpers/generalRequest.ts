@@ -3,7 +3,7 @@ type GeneralReq = {
     results: {
       name: string;
       url: string;
-    };
+    }[];
   };
 };
 

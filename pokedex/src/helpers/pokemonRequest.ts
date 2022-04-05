@@ -1,5 +1,3 @@
-import { type } from "os";
-
 type PokeReq = {
   data: {
     id: number;
