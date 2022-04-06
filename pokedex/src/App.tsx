@@ -10,7 +10,7 @@ function App() {
         <Route
           path="/"
           element={
-            <div>
+            <div style={{ textAlign: "center" }}>
               <Header />
               <Board />
             </div>
@@ -19,18 +19,9 @@ function App() {
         <Route
           path="pokemons/:pokemon"
           element={
-            <div>
+            <div style={{ textAlign: "center" }}>
               <Header />
               <Pokecard />
-            </div>
-          }
-        />
-        <Route
-          path="page/:page"
-          element={
-            <div>
-              <Header />
-              <Board />
             </div>
           }
         />

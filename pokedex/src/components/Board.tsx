@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import GeneralReq from "../helpers/generalRequest";
 import Pokemon from "./Pokemon";
+import styled from "styled-components";
 const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=6";
 const Board: React.FC = (props) => {
   const [data, setData] = useState<{ name: string; url: string }[] | null>(
@@ -33,15 +34,42 @@ const Board: React.FC = (props) => {
     const results = fetchPokemons.data.results;
     setData(results);
   };
+
+  const Results = styled.ul`
+    list-style: none;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  `;
+  const Button = styled.button`
+    border-radius: 5px;
+    border: 2px solid #424242;
+    color: black;
+    background-color: #f1e888;
+    margin: 0 1em;
+    padding: 1% 3%;
+    &:hover {
+      background-color: white;
+    }
+  `;
   return (
     <>
       {data ? (
         <>
-          {data.map((pokemon: { name: string; url: string }) => (
-            <Pokemon key={pokemon.name} name={pokemon.name} url={pokemon.url} />
-          ))}
-          <button onClick={nextHandler}>next</button>
-          <button onClick={prevHandler}>prev</button>
+          <Results>
+            {data.map((pokemon: { name: string; url: string }) => (
+              <Pokemon
+                key={pokemon.name}
+                name={pokemon.name}
+                url={pokemon.url}
+              />
+            ))}
+            <Button onClick={prevHandler}>prev</Button>
+            <Button onClick={nextHandler}>next</Button>
+          </Results>
         </>
       ) : (
         <h3>loading....</h3>
