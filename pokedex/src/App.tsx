@@ -2,6 +2,7 @@ import Board from "./components/Board";
 import Header from "./components/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Pokecard from "./components/PokeCard";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
           element={
             <div style={{ textAlign: "center" }}>
               <Header />
+              <br />
+              <SearchBar />
               <Board />
             </div>
           }

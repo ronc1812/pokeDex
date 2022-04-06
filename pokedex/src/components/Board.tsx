@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import GeneralReq from "../helpers/generalRequest";
 import Pokemon from "./Pokemon";
 import styled from "styled-components";
-const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=6";
+import SearchBar from "./SearchBar";
+const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";
 const Board: React.FC = (props) => {
   const [data, setData] = useState<{ name: string; url: string }[] | null>(
     null
@@ -20,7 +21,7 @@ const Board: React.FC = (props) => {
   const nextHandler = async () => {
     setCurrentPage(++currentPage);
     const fetchPokemons: GeneralReq = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${currentPage * 6}&limit=6`
+      `https://pokeapi.co/api/v2/pokemon/?offset=${currentPage * 12}&limit=12`
     );
     const results = fetchPokemons.data.results;
     setData(results);
@@ -29,7 +30,7 @@ const Board: React.FC = (props) => {
     if (currentPage === 0) return;
     setCurrentPage(--currentPage);
     const fetchPokemons: GeneralReq = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${currentPage * 6}&limit=6`
+      `https://pokeapi.co/api/v2/pokemon/?offset=${currentPage * 12}&limit=12`
     );
     const results = fetchPokemons.data.results;
     setData(results);
@@ -48,13 +49,13 @@ const Board: React.FC = (props) => {
     border-radius: 5px;
     border: 2px solid #424242;
     color: black;
-    background-color: #f1e888;
-    margin: 0 1em;
+    background-color: #f0f8ff;
     padding: 1% 3%;
     &:hover {
       background-color: white;
     }
   `;
+
   return (
     <>
       {data ? (

@@ -4,10 +4,13 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Pokemon from "../helpers/pokemon";
 import PokeReq from "../helpers/pokemonRequest";
+import Stat from "./Stat";
+import Type from "./Type";
 
 let api = `https://pokeapi.co/api/v2/pokemon/`;
 const Pokecard: React.FC = (props) => {
   const [currentPokemon, setPokemon] = useState<Pokemon | null>(null);
+  const [id, setId] = useState<string>("");
   const { pokemon } = useParams<string>();
   useEffect(() => {
     async function getPokemon() {
@@ -17,44 +20,81 @@ const Pokecard: React.FC = (props) => {
         picture: fetchPokemon.data.sprites.front_default,
         types: fetchPokemon.data.types,
         name: pokemon,
+        stats: fetchPokemon.data.stats,
       });
+      fetchPokemon.data.id < 10
+        ? setId(`#00${fetchPokemon.data.id}`)
+        : fetchPokemon.data.id < 100
+        ? setId(`#0${fetchPokemon.data.id}`)
+        : setId(`#${fetchPokemon.data.id}`);
     }
     getPokemon();
   }, []);
 
-  const Info = styled.div`
-    background-color: #f1e888;
+  const Wrapper = styled.div`
+    background-color: #f0f8ff;
     border: 2px solid #424242;
     border-radius: 5px;
-    text-align: center;
-    width: 20%;
-    margin-left: 40%;
+    text-align: left;
+    width: 40%;
+    margin-left: 30%;
     margin-top: 10%;
     font-family: "Monaco", monospace;
   `;
-  const Results = styled.ul`
+
+  const Id = styled.h4`
+    text-align: left;
+    color: #0033cc;
+    font-family: "Monaco", monospace;
+    font-size: 100%;
+  `;
+  const Name = styled(Id)`
+    text-align: left;
+    margin-left: 7%;
+    font-size: 150%;
+    margin-top: 1%;
+  `;
+  const Picture = styled.img`
+    width: 200px;
+  `;
+
+  const Stats = styled.ul`
     list-style: none;
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    text-align: right;
+    font-family: "Monaco", monospace;
+    font-size: 100%;
+  `;
+
+  const Info = styled(Wrapper)`
+    border: red;
+    margin: 0px;
   `;
   return (
     <>
       {currentPokemon ? (
-        <Info>
-          <h4>{currentPokemon.name}</h4>
-          <h4>#{currentPokemon.id} </h4>
-          <img src={currentPokemon.picture} alt="pokemon.data"></img>
-          <Results>
-            <h4>types :</h4>
-            {currentPokemon.types.map((type) => {
-              return <li key={type.type.name}>{type.type.name}</li>;
+        <Wrapper>
+          <Info>
+            <Id>{id} </Id>
+            <Picture src={currentPokemon.picture} alt="pokemon.data" />
+            <Name>{currentPokemon.name}</Name>
+            <Name>
+              {currentPokemon.types.map((type) => {
+                return <Type key={type.type.name} type={type.type.name} />;
+              })}
+            </Name>
+          </Info>
+          <Stats>
+            {currentPokemon.stats.map((stat) => {
+              return (
+                <Stat
+                  key={stat.stat.name}
+                  name={stat.stat.name}
+                  value={stat.base_stat}
+                />
+              );
             })}
-          </Results>
-        </Info>
+          </Stats>
+        </Wrapper>
       ) : (
         <div>{currentPokemon}</div>
       )}
