@@ -4,6 +4,8 @@ type GeneralReq = {
       name: string;
       url: string;
     }[];
+    next: string;
+    previous: string;
   };
 };
 
