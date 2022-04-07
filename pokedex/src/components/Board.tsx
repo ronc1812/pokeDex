@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import GeneralReq from "../helpers/generalRequest";
+import GeneralReq from "../types.ts/generalRequest";
 import Pokemon from "./Pokemon";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";

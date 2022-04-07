@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Pokemon from "../helpers/pokemon";
-import PokeReq from "../helpers/pokemonRequest";
+import Pokemon from "../types.ts/pokemon";
+import PokeReq from "../types.ts/pokemonRequest";
 import Stat from "./Stat";
 import Type from "./Type";
 
