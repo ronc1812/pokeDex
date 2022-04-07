@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import GeneralReq from "../types.ts/generalRequest";
+import GeneralReq from "../types/generalRequest";
 import Pokemon from "./Pokemon";
 import styled from "styled-components";
 const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";

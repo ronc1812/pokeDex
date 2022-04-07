@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PokeReq from "../types.ts/pokemonRequest";
+import PokeReq from "../types/pokemonRequest";
 import styled from "styled-components";
 let api = `https://pokeapi.co/api/v2/pokemon/`;
 const Card = styled.li`
