@@ -8,6 +8,10 @@ const Search = styled.input`
   width: 341px;
   height: 36px;
   margin-top: 2%;
+    @media (max-width: 768px) {
+    margin-left: -232px;
+    width: 157px;
+    height: 36px;
 `;
 const Button = styled.button`
   border-radius: 5px;
@@ -19,6 +23,10 @@ const Button = styled.button`
   color: white;
   margin-top: 2%;
   margin-left: 0.3%;
+    @media (max-width: 768px) {
+    margin-left: 1px;
+    width: 60px;
+    height: 40px;
 `;
 const SearchBar = () => {
   const [input, setInput] = useState<string>("");

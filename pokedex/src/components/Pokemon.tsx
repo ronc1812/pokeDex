@@ -15,6 +15,9 @@ const Card = styled.li`
   padding: 1px 2%;
   text-align: center;
   font-family: "Monaco", monospace;
+  @media (max-width: 768px) {
+    padding: 2% 20%;
+  }
 `;
 
 const Id = styled.h4`
@@ -32,13 +35,13 @@ const Picture = styled.img`
 const Pokemon: React.FC<{ name: string; url: string }> = (props) => {
   const [picture, setPicture] = useState<string>("picture");
   const [id, setId] = useState<string>("");
-  const [name, setName] = useState<string>("");
+
   const navigator = useNavigate();
   useEffect(() => {
     async function getPokemon() {
       const fetchPokemon: PokeReq = await axios.get(`${api}${props.name}`);
       const currentPokemon = fetchPokemon.data;
-      setName(currentPokemon.name);
+
       currentPokemon.id < 10
         ? setId(`#00${currentPokemon.id}`)
         : currentPokemon.id < 100

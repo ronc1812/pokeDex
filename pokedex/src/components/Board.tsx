@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import GeneralReq from "../types.ts/generalRequest";
 import Pokemon from "./Pokemon";
 import styled from "styled-components";
-import SearchBar from "./SearchBar";
 const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";
 const Wrapper = styled.div`
   display: grid;
@@ -24,6 +23,9 @@ const Results = styled.ul`
   margin-inline-end: 0px;
   padding-inline-start: 40px;
   margin-left: 7%;
+    @media (max-width: 768px) {
+    margin-left: -34px;
+    width: 125px;;
 `;
 const Button = styled.button`
   border-radius: 5px;
