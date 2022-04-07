@@ -5,6 +5,36 @@ import Pokemon from "./Pokemon";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
 const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-areas:
+    "a"
+    "b";
+`;
+const ButtonDiv = styled.div`
+  grid-area: b;
+`;
+const Results = styled.ul`
+  grid-area: a;
+  list-style: none;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  margin-left: 7%;
+`;
+const Button = styled.button`
+  border-radius: 5px;
+  border: 2px solid #f7f7f9;
+  color: black;
+  padding: 1% 3%;
+  background-color: #f7f7f9;
+  &:hover {
+    background-color: white;
+  }
+`;
 const Board: React.FC = (props) => {
   const [data, setData] = useState<{ name: string; url: string }[] | null>(
     null
@@ -36,41 +66,25 @@ const Board: React.FC = (props) => {
     setData(results);
   };
 
-  const Results = styled.ul`
-    list-style: none;
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
-  `;
-  const Button = styled.button`
-    border-radius: 5px;
-    border: 2px solid #424242;
-    color: black;
-    background-color: #f0f8ff;
-    padding: 1% 3%;
-    &:hover {
-      background-color: white;
-    }
-  `;
-
   return (
     <>
       {data ? (
         <>
-          <Results>
-            {data.map((pokemon: { name: string; url: string }) => (
-              <Pokemon
-                key={pokemon.name}
-                name={pokemon.name}
-                url={pokemon.url}
-              />
-            ))}
-            <Button onClick={prevHandler}>prev</Button>
-            <Button onClick={nextHandler}>next</Button>
-          </Results>
+          <Wrapper>
+            <Results>
+              {data.map((pokemon: { name: string; url: string }) => (
+                <Pokemon
+                  key={pokemon.name}
+                  name={pokemon.name}
+                  url={pokemon.url}
+                />
+              ))}
+            </Results>
+            <ButtonDiv>
+              <Button onClick={prevHandler}>prev</Button>
+              <Button onClick={nextHandler}>next</Button>
+            </ButtonDiv>
+          </Wrapper>
         </>
       ) : (
         <h3>loading....</h3>

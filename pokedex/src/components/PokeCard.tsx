@@ -8,6 +8,66 @@ import Stat from "./Stat";
 import Type from "./Type";
 
 let api = `https://pokeapi.co/api/v2/pokemon/`;
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-areas:
+    "a b c c"
+    "a b d d"
+    "a b d d";
+  background-color: #f7f7f9;
+  border: 2px solid #f7f7f9;
+  border-radius: 5px;
+  text-align: left;
+  width: 40%;
+  margin-left: 30%;
+  margin-top: 10%;
+  font-family: "Monaco", monospace;
+`;
+
+const Id = styled.h4`
+  text-align: left;
+  color: #373299;
+  font-family: "Monaco", monospace;
+  font-size: 100%;
+  margin: 0;
+`;
+const Name = styled(Id)`
+  text-align: center;
+  margin-left: 7%;
+  font-size: 100%;
+  margin-top: 1%;
+`;
+const Picture = styled.img`
+  width: 100px;
+  margin-left: 20%;
+  margin-top: 20%;
+`;
+
+const Stats = styled.div`
+  grid-area: d;
+  list-style: none;
+  text-align: right;
+  font-family: "Monaco", monospace;
+  font-size: 100%;
+  height: 250px;
+`;
+
+const Info = styled.div`
+  grid-area: a;
+  margin: 0px;
+  float: left;
+`;
+
+const StatsHeader = styled.h4`
+  grid-area: c;
+  font-size: 100%;
+  text-align: center;
+  color: #373299;
+`;
+const Border = styled.div`
+  grid-area: b;
+  border-left: 1px solid #d7d7d7;
+`;
 const Pokecard: React.FC = (props) => {
   const [currentPokemon, setPokemon] = useState<Pokemon | null>(null);
   const [id, setId] = useState<string>("");
@@ -19,7 +79,7 @@ const Pokecard: React.FC = (props) => {
         id: fetchPokemon.data.id,
         picture: fetchPokemon.data.sprites.front_default,
         types: fetchPokemon.data.types,
-        name: pokemon,
+        name: fetchPokemon.data.name,
         stats: fetchPokemon.data.stats,
       });
       fetchPokemon.data.id < 10
@@ -31,50 +91,12 @@ const Pokecard: React.FC = (props) => {
     getPokemon();
   }, []);
 
-  const Wrapper = styled.div`
-    background-color: #f0f8ff;
-    border: 2px solid #424242;
-    border-radius: 5px;
-    text-align: left;
-    width: 40%;
-    margin-left: 30%;
-    margin-top: 10%;
-    font-family: "Monaco", monospace;
-  `;
-
-  const Id = styled.h4`
-    text-align: left;
-    color: #0033cc;
-    font-family: "Monaco", monospace;
-    font-size: 100%;
-  `;
-  const Name = styled(Id)`
-    text-align: left;
-    margin-left: 7%;
-    font-size: 150%;
-    margin-top: 1%;
-  `;
-  const Picture = styled.img`
-    width: 200px;
-  `;
-
-  const Stats = styled.ul`
-    list-style: none;
-    text-align: right;
-    font-family: "Monaco", monospace;
-    font-size: 100%;
-  `;
-
-  const Info = styled(Wrapper)`
-    border: red;
-    margin: 0px;
-  `;
   return (
     <>
       {currentPokemon ? (
         <Wrapper>
           <Info>
-            <Id>{id} </Id>
+            <Id>{id}</Id>
             <Picture src={currentPokemon.picture} alt="pokemon.data" />
             <Name>{currentPokemon.name}</Name>
             <Name>
@@ -83,20 +105,14 @@ const Pokecard: React.FC = (props) => {
               })}
             </Name>
           </Info>
+          <Border></Border>
           <Stats>
-            {currentPokemon.stats.map((stat) => {
-              return (
-                <Stat
-                  key={stat.stat.name}
-                  name={stat.stat.name}
-                  value={stat.base_stat}
-                />
-              );
-            })}
+            <StatsHeader>stats</StatsHeader>
+            <Stat stats={currentPokemon.stats} />
           </Stats>
         </Wrapper>
       ) : (
-        <div>{currentPokemon}</div>
+        <div>oops...something went wrong!</div>
       )}
     </>
   );
