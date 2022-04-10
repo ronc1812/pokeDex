@@ -1,70 +1,29 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import GeneralReq from "../types/generalRequest";
 import Pokemon from "./Pokemon";
-import styled from "styled-components";
-const server: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-areas:
-    "a"
-    "b";
-`;
-const ButtonDiv = styled.div`
-  grid-area: b;
-`;
-const Results = styled.ul`
-  grid-area: a;
-  list-style: none;
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-  margin-left: 7%;
-    @media (max-width: 768px) {
-    margin-left: -34px;
-    width: 125px;;
-`;
-const Button = styled.button`
-  border-radius: 5px;
-  border: 2px solid #f7f7f9;
-  color: black;
-  padding: 1% 3%;
-  background-color: #f7f7f9;
-  &:hover {
-    background-color: white;
-  }
-`;
+
+import getPokemon from "../services/getPokemons";
+import { Wrapper, Results, ButtonDiv, Button } from "../styles/BoardStyle";
 const Board: React.FC = (props) => {
   const [data, setData] = useState<{ name: string; url: string }[] | null>(
     null
   );
   let [currentPage, setCurrentPage] = useState<number>(0);
   useEffect(() => {
-    async function fetchData() {
-      const fetchPokemons: GeneralReq = await axios.get(server);
-      const results = fetchPokemons.data.results;
+    async function getPokemons() {
+      const results = await getPokemon(0);
       setData(results);
     }
-    fetchData();
+    getPokemons();
   }, []);
   const nextHandler = async () => {
     setCurrentPage(++currentPage);
-    const fetchPokemons: GeneralReq = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${currentPage * 12}&limit=12`
-    );
-    const results = fetchPokemons.data.results;
+    const results = await getPokemon(currentPage);
     setData(results);
   };
   const prevHandler = async () => {
     if (currentPage === 0) return;
     setCurrentPage(--currentPage);
-    const fetchPokemons: GeneralReq = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${currentPage * 12}&limit=12`
-    );
-    const results = fetchPokemons.data.results;
+    const results = await getPokemon(currentPage);
     setData(results);
   };
 
